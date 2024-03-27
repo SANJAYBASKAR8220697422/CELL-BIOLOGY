@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marked Image with Tooltips</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .image-container {
+            position: relative;
+            width: 80%; /* Adjust container width */
+            max-width: 600px; /* Set maximum width */
+        }
+
+        .marked-area {
+            position: absolute;
+            /*background-color: rgba(255, 0, 0, 0.5); !* Semi-transparent red *!*/
+            display: none; /* Initially hidden */
+            cursor: pointer; /* Show pointer cursor on hover */
+        }
+
+        .image-container:hover .marked-area {
+            display: block; /* Show on hover */
+        }
+
+        /* Define positions of marked areas */
+        .marked-area.marked-area-1 {
+            top: 15%; /* Adjust the top position */
+            left: 15%; /* Adjust the left position */
+            width: 25%; /* Adjust the width */
+            height: 20%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-2 {
+            top: 35%; /* Adjust the top position */
+            left: 25%; /* Adjust the left position */
+            width: 20%; /* Adjust the width */
+            height: 35%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-3 {
+            top: 75%; /* Adjust the top position */
+            left: 60%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 10%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-4 {
+            top: 20%; /* Adjust the top position */
+            left: 50%; /* Adjust the left position */
+            width: 25%; /* Adjust the width */
+            height: 35%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-5 {
+            top: 55%; /* Adjust the top position */
+            left: 40%; /* Adjust the left position */
+            width: 30%; /* Adjust the width */
+            height: 20%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-6 {
+            top: 7%; /* Adjust the top position */
+            left: 60%; /* Adjust the left position */
+            width: 15%; /* Adjust the width */
+            height: 25%; /* Adjust the height */
+            rotate: 300deg;
+        }
+
+        .marked-area.marked-area-7 {
+            top: 50%; /* Adjust the top position */
+            left: 15%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 25%; /* Adjust the height */
+            rotate: -20deg;
+        }
+
+        .marked-area.marked-area-8 {
+            top: 33%; /* Adjust the top position */
+            left: 10%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-9 {
+            top: 75%; /* Adjust the top position */
+            left: 17%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-10 {
+            top: 75%; /* Adjust the top position */
+            left: 75%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-11 {
+            top: 57%; /* Adjust the top position */
+            left: 72%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-12 {
+            top: 43%; /* Adjust the top position */
+            left: 80%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 28%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-13 {
+            top: 78%; /* Adjust the top position */
+            left: 36%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-14 {
+            top: 8%; /* Adjust the top position */
+            left: 90%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 80%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-15 {
+            top: 12%; /* Adjust the top position */
+            left: 01%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 80%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-16 {
+            top: 85%; /* Adjust the top position */
+            left: 01%; /* Adjust the left position */
+            width: 90%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-17 {
+            top: 5%; /* Adjust the top position */
+            left: 01%; /* Adjust the left position */
+            width: 90%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        /* Tooltip styling using the title attribute */
+        .marked-area:hover::after {
+            content: attr(title); /* Display the title text */
+            position: absolute;
+            background-color: #000;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            /* Position the tooltip relative to the hovered area */
+            top: 100%;
+            left: 0;
+            width: fit-content; /* Adjust width based on content */
+        }
+        .plant-cell-title {
+            position: absolute;
+            top: 10px; /* Adjust top position as needed */
+            left: 10px; /* Adjust left position as needed */
+            color: white; /* Change color if needed */
+            font-size: 30px; /* Change font size if needed */
+            font-weight: bold; /* Optionally bold */
+            font-family: "BankGothic Lt BT", serif;
+            z-index: 10; /* Ensure it's above the image */
+            /*background-color: rgba(8, 196, 213, 0.96); !* Optional background with transparency *!*/
+        }
+
+        .points-to-be-known {
+            margin-top: 50px;
+            position: absolute;
+            top: 10px; /* Adjust top position as needed */
+            left: 10px; /* Adjust left position as needed */
+            color: white; /* Change color if needed */
+            font-size: 20px; /* Change font size if needed */
+            font-family: "BankGothic Lt BT", serif;
+            z-index: 10; /* Ensure it's above the image */
+            background-color: rgba(0, 0, 0, 0); /* Optional background with transparency */
+            width: 460px;
+        }
+
+        /*button*/
+        #animatedButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            /*margin-left: 50px;*/
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #animatedButton:hover {
+            background-color: #0056b3;
+        }
+
+        #animatedButton.clicked {
+            animation: pulse 0.3s linear;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="plant-cell-title"><u><b>Plant cell diagram:</b></u></div>
+<div class="points-to-be-known">
+    <ul>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Mitochondrion" target="_blank">Mitochondria:</a></u></strong> Known as the powerhouse of the cell, mitochondria produce energy through cellular respiration.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Cell_wall" target="_blank">Cell Wall:</a></u></strong> Found in plant cells, the cell wall provides structural support and protection to the cell.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Chloroplast" target="_blank">Chloroplast:</a></u></strong> Also present in plant cells, chloroplasts are responsible for photosynthesis, converting light energy into chemical energy.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Golgi_apparatus" target="_blank">Golgi Apparatus:</a></u></strong> This organelle processes and packages proteins and lipids synthesized by the cell.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Cell_nucleus" target="_blank">Nucleus:</a></u></strong> The nucleus contains the cell's genetic material and controls cellular activities.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Vacuole" target="_blank">Vacuole:</a></u></strong> Large membrane-bound sacs found in plant and some animal cells, vacuoles store water, nutrients, and waste products.</li>
+        <li>
+            <a href="second.html">
+                <button id="animatedButton" onclick="buttonClicked()">GO CHOOSE PAGE</button>
+            </a>
+        </li>
+        <li><a href="index.html" class="button"><u>Home Page</u></a></li>
+    </ul>
+</div>
+<div class="image-container">
+    <img src="plant.jpg" alt="Centered Image" style="max-width: 100%; max-height: 100%; width: auto; height: auto;">
+    <div class="marked-area marked-area-1" title="GOLGI APPARATUS" onclick="location.href='https://en.wikipedia.org/wiki/Golgi_apparatus'"></div>
+    <div class="marked-area marked-area-2" title="VACUOLE" onclick="location.href='https://en.wikipedia.org/wiki/Vacuole'"></div>
+    <div class="marked-area marked-area-3" title="CHLOROPLAST" onclick="location.href='https://en.wikipedia.org/wiki/Chloroplast'"></div>
+    <div class="marked-area marked-area-4" title="NUCLEUS" onclick="location.href='https://en.wikipedia.org/wiki/Cell_nucleus'"></div>
+    <div class="marked-area marked-area-5" title="VACUOLE" onclick="location.href='https://en.wikipedia.org/wiki/Vacuole'"></div>
+    <div class="marked-area marked-area-6" title="CHLOROPLAST" onclick="location.href='https://en.wikipedia.org/wiki/Chloroplast'"></div>
+    <div class="marked-area marked-area-7" title="CHLOROPLAST" onclick="location.href='https://en.wikipedia.org/wiki/Chloroplast'"></div>
+    <div class="marked-area marked-area-8" title="MITOCHONDRIA" onclick="location.href='https://en.wikipedia.org/wiki/Mitochondrion'"></div>
+    <div class="marked-area marked-area-9" title="MITOCHONDRIA" onclick="location.href='https://en.wikipedia.org/wiki/Mitochondrion'"></div>
+    <div class="marked-area marked-area-10" title="MITOCHONDRIA" onclick="location.href='https://en.wikipedia.org/wiki/Mitochondrion'"></div>
+    <div class="marked-area marked-area-11" title="MITOCHONDRIA" onclick="location.href='https://en.wikipedia.org/wiki/Chloroplast'"></div>
+    <div class="marked-area marked-area-12" title="CHLOROPLAST" onclick="location.href='https://en.wikipedia.org/wiki/Chloroplast'"></div>
+    <div class="marked-area marked-area-13" title="CHLOROPLAST" onclick="location.href='https://en.wikipedia.org/wiki/Chloroplast'"></div>
+    <div class="marked-area marked-area-14" title="CELL WALL" onclick="location.href='https://en.wikipedia.org/wiki/Cell_wall'"></div>
+    <div class="marked-area marked-area-15" title="CELL WALL" onclick="location.href='https://en.wikipedia.org/wiki/Cell_wall'"></div>
+    <div class="marked-area marked-area-16" title="CELL WALL" onclick="location.href='https://en.wikipedia.org/wiki/Cell_wall'"></div>
+    <div class="marked-area marked-area-17" title="CELL WALL" onclick="location.href='https://en.wikipedia.org/wiki/Cell_wall'"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marked Image with Tooltips</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .image-container {
+            position: relative;
+            width: 140%;
+            max-width: 700px;
+            height: 100%;
+        }
+
+        .marked-area {
+            position: absolute;
+            /*background-color: rgba(255, 0, 0, 0.5); !* Semi-transparent red *!*/
+            display: none;
+            cursor: pointer;
+        }
+
+        .image-container:hover .marked-area {
+            display: block;
+        }
+
+        /* Define positions of marked areas */
+        .marked-area.marked-area-1 {
+            top: 18%; /* Adjust the top position */
+            left: 30%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 20%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-2 {
+            top: 53%; /* Adjust the top position */
+            left: 28%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 20%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-3 {
+            top: 64%; /* Adjust the top position */
+            left: 59%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 14%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-4 {
+            top: 67%; /* Adjust the top position */
+            left: 43%; /* Adjust the left position */
+            width: 17%; /* Adjust the width */
+            height: 21%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-5 {
+            top: 22%; /* Adjust the top position */
+            left: 40%; /* Adjust the left position */
+            width: 30%; /* Adjust the width */
+            height: 35%; /* Adjust the height */
+            rotate: 310deg;
+        }
+
+        .marked-area.marked-area-6 {
+            top: 28%; /* Adjust the top position */
+            left: 45%; /* Adjust the left position */
+            width: 20%; /* Adjust the width */
+            height: 23%; /* Adjust the height */
+            /*rotate: 300deg;*/
+        }
+
+        .marked-area.marked-area-7 {
+            top: 53%; /* Adjust the top position */
+            left: 37%; /* Adjust the left position */
+            width: 16%; /* Adjust the width */
+            height: 15%; /* Adjust the height */
+            /*rotate: -20deg;*/
+        }
+
+        .marked-area.marked-area-8 {
+            top: 43%; /* Adjust the top position */
+            left: 27%; /* Adjust the left position */
+            width: 8%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-9 {
+            top: 75%; /* Adjust the top position */
+            left: 35%; /* Adjust the left position */
+            width: 7%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-10 {
+            top: 60%; /* Adjust the top position */
+            left: 53%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-11 {
+            top: 40%; /* Adjust the top position */
+            left: 33%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 17%; /* Adjust the height */
+        }
+
+        .marked-area.marked-area-12 {
+            top: 8%; /* Adjust the top position */
+            left: 58%; /* Adjust the left position */
+            width: 10%; /* Adjust the width */
+            height: 28%; /* Adjust the height */
+            rotate: -40deg;
+        }
+
+        .marked-area.marked-area-13 {
+            top: 36%; /* Adjust the top position */
+            left: 53%; /* Adjust the left position */
+            width: 8%; /* Adjust the width */
+            height: 8%; /* Adjust the height */
+        }
+
+        .marked-area:hover::after {
+            content: attr(title); /* Display the title text */
+            position: absolute;
+            background-color: #000;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            /* Position the tooltip relative to the hovered area */
+            top: 100%;
+            left: 0;
+            width: fit-content; /* Adjust width based on content */
+        }
+        .animal-cell-title {
+            position: absolute;
+            top: 10px; /* Adjust top position as needed */
+            left: 10px; /* Adjust left position as needed */
+            color: white; /* Change color if needed */
+            font-size: 30px; /* Change font size if needed */
+            font-weight: bold; /* Optionally bold */
+            font-family: "BankGothic Lt BT", serif;
+            z-index: 10;
+        }
+
+        .points-to-be-known {
+            margin-top: 50px;
+            position: absolute;
+            top: 10px; /* Adjust top position as needed */
+            left: 10px; /* Adjust left position as needed */
+            color: white; /* Change color if needed */
+            font-size: 20px; /* Change font size if needed */
+            font-family: "BankGothic Lt BT", serif;
+            z-index: 10; /* Ensure it's above the image */
+            background-color: rgba(0, 0, 0, 0); /* Optional background with transparency */
+            width: 410px;
+        }
+        /*button*/
+        #animatedButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            /*margin-left: 50px;*/
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #animatedButton:hover {
+            background-color: #0056b3;
+        }
+
+        #animatedButton.clicked {
+            animation: pulse 0.3s linear;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+<div class="animal-cell-title"><u><b>Animal cell diagram:</b></u></div>
+<div class="points-to-be-known">
+    <ul>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Nucleus">Nucleus:</a></u></strong> The nucleus is a membrane-bound organelle that contains the cell's genetic material and controls cellular activities.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Endoplasmic_reticulum">Endoplasmic reticulum:</a></u></strong> The endoplasmic reticulum is a network of membranes involved in protein and lipid synthesis.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Golgi_apparatus">Golgi apparatus:</a></u></strong> The Golgi apparatus is responsible for modifying, sorting, and packaging proteins and lipids for transportation.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Centrosome">Centrosome:</a></u></strong> The centrosome is an organelle involved in cell division, organizing microtubules during cell division.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Lysosome">Lysosome:</a></u></strong> Lysosomes are membrane-bound organelles containing digestive enzymes to break down cellular waste and foreign material.</li>
+        <li><strong><u><a href="https://en.wikipedia.org/wiki/Nucleolus">Nucleolus:</a></u></strong> The nucleolus is a structure within the nucleus where ribosomal RNA synthesis and ribosome assembly occur.</li>
+        <li>
+            <a href="second.html">
+                <button id="animatedButton" onclick="buttonClicked()">GO CHOOSE PAGE</button>
+            </a>
+        </li>
+        <li><a href="index.html" class="button"><u>Home Page</u></a></li>
+    </ul>
+</div>
+
+<div class="image-container">
+
+    <img src="animal.jpg" alt="Centered Image" style="max-width: 100%; max-height: 100%; width: auto; height: 150%;">
+    <div class="marked-area marked-area-1" title="MITOCHONDRIA" onclick="location.href='https://en.wikipedia.org/wiki/Mitochondrion'"></div>
+    <div class="marked-area marked-area-2" title="MITOCHONDRIA" onclick="location.href='https://en.wikipedia.org/wiki/Mitochondrion'"></div>
+    <div class="marked-area marked-area-3" title="MITOCHONDRIA" onclick="location.href='https://en.wikipedia.org/wiki/Mitochondrion'"></div>
+    <div class="marked-area marked-area-4" title="GOLGI APPARATUS" onclick="location.href='https://en.wikipedia.org/wiki/Golgi_apparatus'"></div>
+    <div class="marked-area marked-area-5" title="ENDOPLASMIC RETICULUM" onclick="location.href='https://en.wikipedia.org/wiki/Endoplasmic_reticulum'"></div>
+    <div class="marked-area marked-area-6" title="NUCLEUS" onclick="location.href='https://en.wikipedia.org/wiki/Cell_nucleus'"></div>
+    <div class="marked-area marked-area-7" title="CENTROSOME" onclick="location.href='https://en.wikipedia.org/wiki/Centrosome'"></div>
+    <div class="marked-area marked-area-8" title="LYSOSOME" onclick="location.href='https://en.wikipedia.org/wiki/Lysosome'"></div>
+    <div class="marked-area marked-area-9" title="LYSOSOME" onclick="location.href='https://en.wikipedia.org/wiki/Lysosome'"></div>
+    <div class="marked-area marked-area-10" title="CYTOSKELETON" onclick="location.href='https://en.wikipedia.org/wiki/Cytoskeleton'"></div>
+    <div class="marked-area marked-area-11" title="CYTOSKELETON" onclick="location.href='https://en.wikipedia.org/wiki/Cytoskeleton'"></div>
+    <div class="marked-area marked-area-12" title="CYTOSKELETON" onclick="location.href='https://en.wikipedia.org/wiki/Cytoskeleton'"></div>
+    <div class="marked-area marked-area-13" title="NUCLEOLUS" onclick="location.href='https://en.wikipedia.org/wiki/Nucleolus'"></div>
+</div>
+
+</body>
+</html>
